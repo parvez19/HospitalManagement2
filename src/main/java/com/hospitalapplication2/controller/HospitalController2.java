@@ -2,11 +2,12 @@ package com.hospitalapplication2.controller;
 
 
 import com.hospitalapplication2.entity.Appointment;
-import com.hospitalapplication2.entity.Pateint;
+import com.hospitalapplication2.entity.NewPateintProfile;
 import com.hospitalapplication2.entity.PateintProfile;
 import com.hospitalapplication2.exceptions.RecordNotAvailableException;
 import com.hospitalapplication2.service.AppointmentService2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -18,7 +19,7 @@ public class HospitalController2 {
     AppointmentService2 appointmentService2;
 
     @PostMapping("add/appointment")
-    public String getAppointment (@RequestBody Appointment appointment) {
+    public ResponseEntity<String> getAppointment (@RequestBody Appointment appointment) throws RecordNotAvailableException {
 
         return appointmentService2.getAppointment(appointment);
     }
@@ -31,14 +32,20 @@ public class HospitalController2 {
 //    }
 
      @GetMapping("getappointment/{id}")
-   public Appointment getByIdAppointment (@PathVariable int id) {
+   public ResponseEntity<Appointment> getByIdAppointment (@PathVariable int id)  throws RecordNotAvailableException{
 
-        return appointmentService2.getByIdAppointmentInfo(id).get();
+        return appointmentService2.getByIdAppointmentInfo(id);
    }
    @GetMapping("getpateint/Profile")
-    public PateintProfile getPateintProfile (@RequestParam int appointmentId) throws RecordNotAvailableException {
+    public ResponseEntity<PateintProfile> getPateintProfile (@RequestParam int appointmentId) throws RecordNotAvailableException {
 
         return appointmentService2.getByPateintProfileInfo(appointmentId);
+   }
+
+   @GetMapping("getpateint/newProfile")
+    public   ResponseEntity<NewPateintProfile> getNewPateintProfile (@RequestParam int PateintId) throws RecordNotAvailableException {
+
+        return appointmentService2.getByNewPateintProfile(PateintId);
    }
 
 }

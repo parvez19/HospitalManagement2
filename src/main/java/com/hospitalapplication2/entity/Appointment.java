@@ -16,4 +16,5 @@ public class Appointment {
       private int patientId;
       private String drName;
       private String dayOfAppointments;
+      private String illness;
 }
